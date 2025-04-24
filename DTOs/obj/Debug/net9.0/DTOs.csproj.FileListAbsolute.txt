@@ -1,0 +1,15 @@
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\DTOs\bin\Debug\net9.0\DTOs.deps.json
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\DTOs\bin\Debug\net9.0\DTOs.dll
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\DTOs\bin\Debug\net9.0\DTOs.pdb
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\DTOs\obj\Debug\net9.0\DTOs.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\DTOs\obj\Debug\net9.0\DTOs.AssemblyInfoInputs.cache
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\DTOs\obj\Debug\net9.0\DTOs.AssemblyInfo.cs
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\DTOs\obj\Debug\net9.0\DTOs.csproj.CoreCompileInputs.cache
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\DTOs\obj\Debug\net9.0\DTOs.dll
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\DTOs\obj\Debug\net9.0\refint\DTOs.dll
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\DTOs\obj\Debug\net9.0\DTOs.pdb
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\DTOs\obj\Debug\net9.0\ref\DTOs.dll
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\DTOs\bin\Debug\net9.0\DataModels.dll
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\DTOs\bin\Debug\net9.0\DataModels.pdb
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\DTOs\obj\Debug\net9.0\DTOs.csproj.AssemblyReference.cache
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\DTOs\obj\Debug\net9.0\DTOs.csproj.Up2Date

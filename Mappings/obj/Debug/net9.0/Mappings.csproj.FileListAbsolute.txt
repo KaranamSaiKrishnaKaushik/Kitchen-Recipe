@@ -1,0 +1,17 @@
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Mappings\bin\Debug\net9.0\Mappings.deps.json
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Mappings\bin\Debug\net9.0\Mappings.dll
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Mappings\bin\Debug\net9.0\Mappings.pdb
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Mappings\bin\Debug\net9.0\DataModels.dll
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Mappings\bin\Debug\net9.0\DTOs.dll
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Mappings\bin\Debug\net9.0\DataModels.pdb
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Mappings\bin\Debug\net9.0\DTOs.pdb
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Mappings\obj\Debug\net9.0\Mappings.csproj.AssemblyReference.cache
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Mappings\obj\Debug\net9.0\Mappings.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Mappings\obj\Debug\net9.0\Mappings.AssemblyInfoInputs.cache
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Mappings\obj\Debug\net9.0\Mappings.AssemblyInfo.cs
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Mappings\obj\Debug\net9.0\Mappings.csproj.CoreCompileInputs.cache
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Mappings\obj\Debug\net9.0\Mappings.csproj.Up2Date
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Mappings\obj\Debug\net9.0\Mappings.dll
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Mappings\obj\Debug\net9.0\refint\Mappings.dll
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Mappings\obj\Debug\net9.0\Mappings.pdb
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Mappings\obj\Debug\net9.0\ref\Mappings.dll

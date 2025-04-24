@@ -1,0 +1,17 @@
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Queries\bin\Debug\net9.0\Queries.deps.json
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Queries\bin\Debug\net9.0\Queries.dll
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Queries\bin\Debug\net9.0\Queries.pdb
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Queries\obj\Debug\net9.0\Queries.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Queries\obj\Debug\net9.0\Queries.AssemblyInfoInputs.cache
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Queries\obj\Debug\net9.0\Queries.AssemblyInfo.cs
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Queries\obj\Debug\net9.0\Queries.csproj.CoreCompileInputs.cache
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Queries\obj\Debug\net9.0\Queries.dll
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Queries\obj\Debug\net9.0\refint\Queries.dll
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Queries\obj\Debug\net9.0\Queries.pdb
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Queries\obj\Debug\net9.0\ref\Queries.dll
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Queries\bin\Debug\net9.0\Data.dll
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Queries\bin\Debug\net9.0\DataModels.dll
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Queries\bin\Debug\net9.0\Data.pdb
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Queries\bin\Debug\net9.0\DataModels.pdb
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Queries\obj\Debug\net9.0\Queries.csproj.AssemblyReference.cache
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Queries\obj\Debug\net9.0\Queries.csproj.Up2Date
