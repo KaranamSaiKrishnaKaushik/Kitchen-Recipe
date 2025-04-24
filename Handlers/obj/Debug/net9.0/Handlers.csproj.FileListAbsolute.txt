@@ -19,3 +19,4 @@ C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Handlers\obj\Debug\net9.0\Handler
 C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Handlers\obj\Debug\net9.0\refint\Handlers.dll
 C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Handlers\obj\Debug\net9.0\Handlers.pdb
 C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Handlers\obj\Debug\net9.0\ref\Handlers.dll
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Handlers\obj\Debug\net9.0\Handlers.sourcelink.json

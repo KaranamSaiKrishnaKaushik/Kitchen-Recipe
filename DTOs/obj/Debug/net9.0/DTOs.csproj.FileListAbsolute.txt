@@ -13,3 +13,4 @@ C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\DTOs\bin\Debug\net9.0\DataModels.
 C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\DTOs\bin\Debug\net9.0\DataModels.pdb
 C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\DTOs\obj\Debug\net9.0\DTOs.csproj.AssemblyReference.cache
 C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\DTOs\obj\Debug\net9.0\DTOs.csproj.Up2Date
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\DTOs\obj\Debug\net9.0\DTOs.sourcelink.json

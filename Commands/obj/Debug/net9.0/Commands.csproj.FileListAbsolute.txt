@@ -17,3 +17,4 @@ C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Commands\bin\Debug\net9.0\DTOs.dl
 C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Commands\bin\Debug\net9.0\DTOs.pdb
 C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Commands\bin\Debug\net9.0\Data.dll
 C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Commands\bin\Debug\net9.0\Data.pdb
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Commands\obj\Debug\net9.0\Commands.sourcelink.json
