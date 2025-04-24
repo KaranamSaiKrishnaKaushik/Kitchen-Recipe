@@ -15,3 +15,4 @@ C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Queries\bin\Debug\net9.0\Data.pdb
 C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Queries\bin\Debug\net9.0\DataModels.pdb
 C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Queries\obj\Debug\net9.0\Queries.csproj.AssemblyReference.cache
 C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Queries\obj\Debug\net9.0\Queries.csproj.Up2Date
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Queries\obj\Debug\net9.0\Queries.sourcelink.json

@@ -9,3 +9,4 @@ C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\DataModels\obj\Debug\net9.0\DataM
 C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\DataModels\obj\Debug\net9.0\refint\DataModels.dll
 C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\DataModels\obj\Debug\net9.0\DataModels.pdb
 C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\DataModels\obj\Debug\net9.0\ref\DataModels.dll
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\DataModels\obj\Debug\net9.0\DataModels.sourcelink.json

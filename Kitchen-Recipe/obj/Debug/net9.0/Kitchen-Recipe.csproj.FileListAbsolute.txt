@@ -186,3 +186,4 @@ C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Kitchen-Recipe\bin\Debug\net9.0\N
 C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Kitchen-Recipe\bin\Debug\net9.0\Queries.dll
 C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Kitchen-Recipe\bin\Debug\net9.0\Queries.pdb
 C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Kitchen-Recipe\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Kitchen-Recipe\obj\Debug\net9.0\Kitchen-Recipe.sourcelink.json
