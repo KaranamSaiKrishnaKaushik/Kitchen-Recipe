@@ -24,7 +24,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidIssuer = $"https://sts.windows.net/{azureAdOptions.TenantId}/",
             ValidAudience = $"api://{azureAdOptions.ClientId}"
         }; // [Authorize] each endpoint if you want to use entra ID authorization like //app.MapGet("/", [Authorize]()
-        // /*"Server=localhost,1433;Initial Catalog=Recipe-Book; Persist Security Info=False;User ID=sa;Password=YourStrong!Passw0rd;Encrypt=False;Connection Timeout=30;"*/
 
     });
 
@@ -43,14 +42,6 @@ builder.Services.AddScoped<AddIngredientCommandHandler>();
 
 builder.Services.AddScoped<AddProductsCommandHandler>();
 builder.Services.AddScoped<GetProductsQueryHandler>();
-
-/*builder.Services.AddDbContext<DataContext>(
-    options =>
-    {
-        options.UseSqlServer(
-            "Server=localhost,1433;Initial Catalog=Recipe-Book; Persist Security Info=False;User ID=sa;Password=YourStrong!Passw0rd;Encrypt=False;Connection Timeout=30;" 
-        );
-    });*/
 
 builder.Services.AddDbContext<DataContext>(options =>
 {
