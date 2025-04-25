@@ -1,1 +1,25 @@
 ﻿/Kitchen-Recipe/appsettings.json
+echo bin/ > .gitignore
+echo obj/ >> .gitignore
+echo *.user >> .gitignore
+echo *.suo >> .gitignore
+echo *.userosscache >> .gitignore
+echo *.sln.docstates >> .gitignore
+echo .idea/ >> .gitignore
+echo appsettings.json >> .gitignore
+echo appsettings.Development.json >> .gitignore
+echo appsettings.Production.json >> .gitignore
+echo packages/ >> .gitignore
+echo *.nupkg >> .gitignore
+echo *.snupkg >> .gitignore
+echo *.log >> .gitignore
+echo *.dll >> .gitignore
+echo *.pdb >> .gitignore
+echo *.exe >> .gitignore
+echo .vscode/ >> .gitignore
+echo *.db >> .gitignore
+echo *.cache >> .gitignore
+echo *.bak >> .gitignore
+echo *.swp >> .gitignore
+echo *.tmp >> .gitignore
+
