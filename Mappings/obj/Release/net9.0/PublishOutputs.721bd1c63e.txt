@@ -1,0 +1,8 @@
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\publish\Mappings.dll
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\publish\Mappings.deps.json
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\publish\Mappings.pdb
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\publish\AutoMapper.dll
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\publish\DataModels.dll
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\publish\DTOs.dll
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\publish\DataModels.pdb
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\publish\DTOs.pdb
