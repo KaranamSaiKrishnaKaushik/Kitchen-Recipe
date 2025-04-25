@@ -1,0 +1,8 @@
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Mappings\bin\Release\net9.0\publish\Mappings.dll
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Mappings\bin\Release\net9.0\publish\Mappings.deps.json
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Mappings\bin\Release\net9.0\publish\Mappings.pdb
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Mappings\bin\Release\net9.0\publish\AutoMapper.dll
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Mappings\bin\Release\net9.0\publish\DataModels.dll
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Mappings\bin\Release\net9.0\publish\DTOs.dll
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Mappings\bin\Release\net9.0\publish\DataModels.pdb
+C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Mappings\bin\Release\net9.0\publish\DTOs.pdb
