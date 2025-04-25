@@ -1,5 +1,4 @@
 C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Kitchen-Recipe\bin\Debug\net9.0\appsettings.Development.json
-C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Kitchen-Recipe\bin\Debug\net9.0\appsettings.json
 C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Kitchen-Recipe\bin\Debug\net9.0\Kitchen-Recipe.staticwebassets.endpoints.json
 C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Kitchen-Recipe\bin\Debug\net9.0\Kitchen-Recipe.exe
 C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\Kitchen-Recipe\bin\Debug\net9.0\Kitchen-Recipe.deps.json

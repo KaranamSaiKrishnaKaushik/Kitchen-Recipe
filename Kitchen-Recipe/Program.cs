@@ -11,9 +11,9 @@ using Queries;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var azureAdOptions = builder.Configuration.GetSection("AzureAd").Get<AzureAdOptions>();
+//var azureAdOptions = builder.Configuration.GetSection("AzureAd").Get<AzureAdOptions>();
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+/*builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.Authority = $"{azureAdOptions.Instance}{azureAdOptions.TenantId}/v2.0";
@@ -27,7 +27,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
     });
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization();*/
 
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();

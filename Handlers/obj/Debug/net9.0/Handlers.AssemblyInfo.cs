@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Handlers")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4fda867af609ebad85dcef557864c25180e28b78")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+13f1a46e7c54714eff3ddab0d61fef06706c7ef7")]
 [assembly: System.Reflection.AssemblyProductAttribute("Handlers")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Handlers")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
