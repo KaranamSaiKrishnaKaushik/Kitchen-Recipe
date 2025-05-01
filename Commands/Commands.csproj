@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
       <ProjectReference Include="..\DataModels\DataModels.csproj" />
       <ProjectReference Include="..\Data\Data.csproj" />
       <ProjectReference Include="..\DTOs\DTOs.csproj" />
@@ -19,6 +20,10 @@
       <Reference Include="Microsoft.AspNetCore.Http.Results">
         <HintPath>..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.15\Microsoft.AspNetCore.Http.Results.dll</HintPath>
       </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="HiNetCloud.Microsoft.AspNetCore.Http.Abstractions" Version="24.8.10.9" />
     </ItemGroup>
 
 </Project>
