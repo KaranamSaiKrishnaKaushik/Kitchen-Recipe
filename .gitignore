@@ -2,6 +2,7 @@
 # Ignore build outputs
 bin/
 obj/
+**/obj/
 
 # Ignore Rider IDE specific files
 *.DotSettings.user

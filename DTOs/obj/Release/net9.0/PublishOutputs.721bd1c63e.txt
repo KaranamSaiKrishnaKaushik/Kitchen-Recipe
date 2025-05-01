@@ -1,5 +1,0 @@
-C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\publish\DTOs.dll
-C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\publish\DTOs.deps.json
-C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\publish\DTOs.pdb
-C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\publish\DataModels.dll
-C:\Users\KaranamK\RiderProjects\Kitchen-Recipe\publish\DataModels.pdb
