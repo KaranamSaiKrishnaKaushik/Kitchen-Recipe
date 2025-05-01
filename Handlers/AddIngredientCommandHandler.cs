@@ -1,4 +1,5 @@
-﻿using Commands;
+﻿using System.Security.Authentication;
+using Commands;
 using Data;
 using DataModels;
 using Microsoft.EntityFrameworkCore;
@@ -114,7 +115,8 @@ public class AddIngredientCommandHandler
                 var newIngredient = new Ingredient
                 {
                     BaseName = baseName,
-                    Amount = command.Amount
+                    Amount = command.Amount,
+                    AuthenticationUid = command.AuthenticationUid
                 };
                 await _context.Ingredient.AddAsync(newIngredient);
                 results.Add(newIngredient);

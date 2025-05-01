@@ -1,29 +1,26 @@
-﻿/Kitchen-Recipe/appsettings.json
-# Ignore build outputs
+﻿@"
+/Kitchen-Recipe/appsettings.json
+# Build results
 bin/
 obj/
 **/obj/
 
-# Ignore Rider IDE specific files
-*.DotSettings.user
-*.sln.DotSettings.user
+# Rider files
 .idea/
+*.sln.DotSettings.user
 
-# Optional: ignore sourcelink files
-**/*.sourcelink.json
-
-# Optional: ignore cache files
-*.AssemblyInfoInputs.cache
-*.AssemblyReference.cache
-*.FileListAbsolute.txt
-
-# Ignore rider project model files
-*.rider.project.model.nuget.info
-*.rider.project.restore.info
-
-# Ignore compiled binaries
+# DLL/EXE output
 *.dll
 *.pdb
 *.exe
-*.cache
-*.csproj.user
+
+# User-specific files
+*.user
+*.suo
+
+# ASP.NET
+.vs/
+
+# Others
+*.log
+"@ | Out-File -Encoding utf8 -NoByteOrderMark .gitignore

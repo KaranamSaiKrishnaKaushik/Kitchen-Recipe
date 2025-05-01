@@ -11,27 +11,21 @@ using Queries;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var azureAdOptions = builder.Configuration.GetSection("AzureAd").Get<AzureAdOptions>();
+var firebaseAuthority = builder.Configuration["FirebaseAuth:Authority"];
+var firebaseAudience = builder.Configuration["FirebaseAuth:Audience"];
 
-/*builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        options.Authority = $"{azureAdOptions.Instance}{azureAdOptions.TenantId}/v2.0";
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidIssuer = $"https://sts.windows.net/{azureAdOptions.TenantId}/",
-            ValidAudience = $"api://{azureAdOptions.ClientId}"
-        }; // [Authorize] each endpoint if you want to use entra ID authorization like //app.MapGet("/", [Authorize]()
-
+        options.Authority = firebaseAuthority;
+        options.Audience = firebaseAudience;
+        options.RequireHttpsMetadata = true;
     });
 
-builder.Services.AddAuthorization();*/
+builder.Services.AddAuthorization();
 
-//builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(); 
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<PayPalService>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
@@ -39,7 +33,7 @@ builder.Services.AddScoped<GetRecipeQueryHandler>();
 builder.Services.AddScoped<AddRecipeCommandHandler>();
 builder.Services.AddScoped<GetIngredientQueryHandler>();
 builder.Services.AddScoped<AddIngredientCommandHandler>();
-
+builder.Services.AddScoped<UpdateRecipeCommandHandler>();
 builder.Services.AddScoped<AddProductsCommandHandler>();
 builder.Services.AddScoped<GetProductsQueryHandler>();
 
@@ -70,11 +64,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-/*if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}*/
 
 app.UseSwagger();
 app.UseSwaggerUI();
