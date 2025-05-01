@@ -4,7 +4,12 @@ namespace DTOs;
 
 public class IngredientDto
 {
-    public IngredientBase BaseName { get; set; } = default!;
-    //public string Name { get; set; }
+    public IngredientBaseDto BaseName { get; set; } = default!;
     public int Amount { get; set; }
+}
+
+public class IngredientBaseDto
+{
+    public Guid Id { get; set; }
+    public string Name { get; set; }
 }

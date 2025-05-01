@@ -6,6 +6,7 @@ namespace Data;
 public class DataContext : DbContext
 {
     public DbSet<Recipe> Recipe => Set<Recipe>();
+    public DbSet<UserDetails> UserDetails => Set<UserDetails>();
     public DbSet<RecipeIngredients> RecipeIngredients => Set<RecipeIngredients>();
     public DbSet<IngredientBase> IngredientBase { get; set; }
     public DbSet<Ingredient> Ingredient { get; set; }
