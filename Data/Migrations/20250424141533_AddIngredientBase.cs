@@ -11,6 +11,7 @@ namespace Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            /*
             migrationBuilder.AddColumn<DateTime>(
                 name: "CreatedDate",
                 table: "Recipe",
@@ -24,6 +25,7 @@ namespace Data.Migrations
                 type: "datetime2",
                 nullable: false,
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+        */
         }
 
         /// <inheritdoc />

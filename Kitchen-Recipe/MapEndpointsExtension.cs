@@ -1,32 +1,44 @@
-﻿using System.Text.Json;
-using Commands;
+﻿using Commands;
 using Data;
-using DataModels;
 using DTOs;
 using Handlers;
 using Mappings;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Queries;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Kitchen_Recipe;
 
 public static class MapEndpointsExtension
 {
+    private  const string UserId = "user_id";
     public static void MapEndpoints(this WebApplication app)
     {
         app.MapGet("/",() => 
             new { message = "This is protected data!" });
         
         app.MapPost("/add-recipe", async (
+            HttpContext httpContext,
             [FromBody] AddRecipeCommand command,
             [FromServices] AddRecipeCommandHandler handler) =>
         {
+            var firebaseUid = httpContext.User.FindFirst(UserId)?.Value;
+            command.AuthenticationUid = firebaseUid;
             var recipe = await handler.HandleAddRecipe(command);
             return Results.Created($"/add-recipe/{recipe.Id}", recipe.Id);
-        });
+        }).RequireAuthorization();
 
+        app.MapPost("/update-recipe", async (
+            HttpContext httpContext,
+            [FromBody] UpdateRecipeCommand command,
+            [FromServices] UpdateRecipeCommandHandler handler) =>
+        {
+            var firebaseUid = httpContext.User.FindFirst("user_id")?.Value;
+            command.AuthenticationUid = firebaseUid;
+            var updatedRecipe = await handler.HandleUpdateRecipe(command);
+            return Results.Ok(updatedRecipe);
+        }).RequireAuthorization();
+         
         app.MapPost("/add-all-recipes",async (
             [FromBody] List<AddRecipeCommand> commands,
             [FromServices] AddRecipeCommandHandler handler) =>
@@ -35,12 +47,27 @@ public static class MapEndpointsExtension
             return Results.Created("/add-all-recipes", recipes.Select(r => r.Id));
         });
 
-        app.MapGet("/fetch-all-recipes", async (
+        app.MapGet("/fetch-all-recipes", async (HttpContext httpContext,
             [FromServices] DataContext context) =>
         {
+            var category = httpContext.Request.Query["category"].ToString();
+            var token = httpContext.Request.Headers["Authorization"].FirstOrDefault();
+            Console.WriteLine($"Authorization Header: {token}");
+            
+            var user = httpContext.User;
+            var firebaseUid = httpContext.User.FindFirst(UserId)?.Value;
+            if (user.Identity is { IsAuthenticated: true })
+            {
+                Console.WriteLine($"User {user.Identity.Name} is authenticated.");
+            }
+            Console.WriteLine($"Category: {category}");
+            Console.WriteLine($"Authorization Header: {token}");
+            Console.WriteLine($"Firebase UID: {firebaseUid}");
+            
             var recipes = await context.Recipe
                 .Include(r => r.Ingredients)
                 .ThenInclude(i => i.BaseName)
+                .Where(r => r.AuthenticationUid == firebaseUid) 
                 .Select(r => new
                 {
                     Id=r.Id,
@@ -63,23 +90,32 @@ public static class MapEndpointsExtension
                 .ToListAsync();
 
             return Results.Ok(recipes);
-        });
+        }).RequireAuthorization();
 
         app.MapPost("/add-single-ingredient", async (
+            HttpContext httpContext,
             [FromBody] AddIngredientCommand command,
             [FromServices] AddIngredientCommandHandler handler) =>
         {
+            var firebaseUid = httpContext.User.FindFirst(UserId)?.Value;
+            command.AuthenticationUid = firebaseUid;
             var result = await handler.HandleAddIngredient(command);
             return Results.Ok(result);
-        });
+        }).RequireAuthorization();
 
         app.MapPost("/add-multiple-ingredients", async (
+            HttpContext httpContext,
             [FromBody] List<AddIngredientCommand> command,
             [FromServices] AddIngredientCommandHandler handler) =>
         {
+            var firebaseUid = httpContext.User.FindFirst(UserId)?.Value;
+            foreach (var cmd in command)
+            {
+                cmd.AuthenticationUid = firebaseUid;
+            }
             var result = await handler.HandleAddMultipleIngredients(command);
             return Results.Ok(result);
-        });
+        }).RequireAuthorization();
 
         app.MapPost("/update-single-ingredient", async (
             [FromBody] AddIngredientCommand command,
@@ -97,10 +133,14 @@ public static class MapEndpointsExtension
             return Results.Ok(result);
         });
 
-        app.MapGet("/fetch-all-ingredients", async ([FromServices] DataContext dataContext) =>
+        app.MapGet("/fetch-all-ingredients", async (
+            HttpContext httpContext,
+            [FromServices] DataContext dataContext) =>
         {
+            var firebaseUid = httpContext.User.FindFirst("user_id")?.Value;
             var ingredients = await dataContext.Ingredient
                 .Include(i => i.BaseName)
+                .Where(r => r.AuthenticationUid == firebaseUid )
                 .Select(i => new
                 {
                     Id=i.Id,
