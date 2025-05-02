@@ -91,8 +91,8 @@ public static class MapEndpointsExtension
                 .ToListAsync();
 
             return Results.Ok(recipes);
-        });
-    //.RequireAuthorization();
+        }).RequireAuthorization();
+        
         app.MapPost("/add-single-ingredient", async (
             HttpContext httpContext,
             [FromBody] AddIngredientCommand command,
