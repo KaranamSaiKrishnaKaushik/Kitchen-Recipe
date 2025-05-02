@@ -8,11 +8,19 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Data\Data.csproj" />
+      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.0.3" />
+      <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="7.0.3" />
+      <PackageReference Include="Microsoft.IdentityModel.Protocols" Version="7.0.3" />
+      <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="7.0.3" />
+      <PackageReference Include="Microsoft.IdentityModel.Logging" Version="7.0.3" />
+      <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="7.0.3" />
+      <PackageReference Include="Microsoft.IdentityModel.Abstractions" Version="7.0.3" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
       <PackageReference Include="PayPalCheckoutSdk.DotNet7" Version="1.0.5" />
+      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.0.3" />
     </ItemGroup>
 
 </Project>
