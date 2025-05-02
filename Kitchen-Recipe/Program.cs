@@ -13,9 +13,12 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
     
-    var firebaseAuthority = builder.Configuration["FirebaseAuth:Authority"];
-    var firebaseAudience = builder.Configuration["FirebaseAuth:Audience"];
-    
+    var firebaseAuthority = builder.Configuration["FirebaseAuth:Authority"]
+                            ?? throw new InvalidOperationException("Missing FirebaseAuth:Authority");
+    var firebaseAudience = builder.Configuration["FirebaseAuth:Audience"]
+                           ?? throw new InvalidOperationException("Missing FirebaseAuth:Audience");
+    Console.WriteLine("Authority from config: " + firebaseAuthority);
+    Console.WriteLine("Audience from config: " + firebaseAudience);
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
         {
