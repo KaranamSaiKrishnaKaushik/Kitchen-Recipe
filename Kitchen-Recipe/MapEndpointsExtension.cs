@@ -53,24 +53,25 @@ public static class MapEndpointsExtension
             var category = httpContext.Request.Query["category"].ToString();
             var token = httpContext.Request.Headers["Authorization"].FirstOrDefault();
             Console.WriteLine($"Authorization Header: {token}");
-            
+
             var user = httpContext.User;
             var firebaseUid = httpContext.User.FindFirst(UserId)?.Value;
             if (user.Identity is { IsAuthenticated: true })
             {
                 Console.WriteLine($"User {user.Identity.Name} is authenticated.");
             }
+
             Console.WriteLine($"Category: {category}");
             Console.WriteLine($"Authorization Header: {token}");
             Console.WriteLine($"Firebase UID: {firebaseUid}");
-            
+
             var recipes = await context.Recipe
                 .Include(r => r.Ingredients)
                 .ThenInclude(i => i.BaseName)
-                .Where(r => r.AuthenticationUid == firebaseUid) 
+                .Where(r => r.AuthenticationUid == firebaseUid)
                 .Select(r => new
                 {
-                    Id=r.Id,
+                    Id = r.Id,
                     name = r.Name,
                     description = r.Description,
                     imagePath = r.ImagePath,
@@ -90,8 +91,8 @@ public static class MapEndpointsExtension
                 .ToListAsync();
 
             return Results.Ok(recipes);
-        }).RequireAuthorization();
-
+        });
+    //.RequireAuthorization();
         app.MapPost("/add-single-ingredient", async (
             HttpContext httpContext,
             [FromBody] AddIngredientCommand command,
