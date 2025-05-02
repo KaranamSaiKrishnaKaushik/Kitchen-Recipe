@@ -25,7 +25,22 @@ try
             options.Authority = firebaseAuthority;
             options.Audience = firebaseAudience;
             options.RequireHttpsMetadata = true;
+            
+            options.Events = new JwtBearerEvents
+            {
+                OnAuthenticationFailed = context =>
+                {
+                    Console.WriteLine("JWT AUTH FAIL: " + context.Exception.Message);
+                    return Task.CompletedTask;
+                },
+                OnTokenValidated = context =>
+                {
+                    Console.WriteLine("JWT AUTH SUCCESS");
+                    return Task.CompletedTask;
+                }
+            };
         });
+    
     
     builder.Services.AddAuthorization();
     
