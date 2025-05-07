@@ -3,6 +3,7 @@ using Data;
 using DTOs;
 using Handlers;
 using Mappings;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Queries;
@@ -16,6 +17,40 @@ public static class MapEndpointsExtension
     {
         app.MapGet("/",() => 
             new { message = "This is protected data!" });
+        
+        app.MapPost("/add-user", async (
+            HttpContext httpContext,
+            [FromBody] UserDto userDto,
+            IMediator mediator
+            )=>{
+            var firebaseUid = httpContext.User.FindFirst(UserId)?.Value;
+            //var userId = httpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            // httpContext.User.FindFirst("sub")?.Value; 
+            // later for Azure B2C
+            if (string.IsNullOrWhiteSpace(firebaseUid))
+                return Results.Unauthorized();
+
+            var command = new AddUserCommand(userDto, firebaseUid);
+            var result = await mediator.Send(command);
+            return Results.Ok(result);
+            
+        }).RequireAuthorization();
+        
+        app.MapPut("/update-user", async (
+            HttpContext httpContext,
+            [FromBody] UserDto userDto,
+            IMediator mediator
+        ) =>
+        {
+            var firebaseUid = httpContext.User.FindFirst("user_id")?.Value;
+            if (string.IsNullOrWhiteSpace(firebaseUid))
+                return Results.Unauthorized();
+
+            var command = new UpdateUserCommand(userDto, firebaseUid);
+            var result = await mediator.Send(command);
+
+            return result == null ? Results.NotFound() : Results.Ok(result);
+        }).RequireAuthorization();
         
         app.MapPost("/add-recipe", async (
             HttpContext httpContext,
@@ -37,6 +72,19 @@ public static class MapEndpointsExtension
             command.AuthenticationUid = firebaseUid;
             var updatedRecipe = await handler.HandleUpdateRecipe(command);
             return Results.Ok(updatedRecipe);
+        }).RequireAuthorization();
+        
+        app.MapGet("/get-user", async (
+            HttpContext httpContext,
+            IMediator mediator
+        ) => {
+            var firebaseUid = httpContext.User.FindFirst("user_id")?.Value;
+            if (string.IsNullOrWhiteSpace(firebaseUid))
+                return Results.Unauthorized();
+
+            var query = new GetUserByAuthUidQuery(firebaseUid);
+            var result = await mediator.Send(query);
+            return result == null ? Results.NotFound() : Results.Ok(result);
         }).RequireAuthorization();
          
         app.MapPost("/add-all-recipes",async (

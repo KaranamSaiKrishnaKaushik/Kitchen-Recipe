@@ -4,6 +4,7 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250506054104_AlterUserDetailsTableMakeColumnsNullable")]
+    partial class AlterUserDetailsTableMakeColumnsNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -231,7 +234,7 @@ namespace Data.Migrations
                     b.Property<string>("EmailId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FacebookUserName")
+                    b.Property<string>("FacobookUserName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Headline")
@@ -255,10 +258,7 @@ namespace Data.Migrations
                     b.Property<string>("State")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StreetAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TiktokUserName")
+                    b.Property<string>("SteetAddress")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TwitterUserName")

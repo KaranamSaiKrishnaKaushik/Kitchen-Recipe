@@ -1,8 +1,7 @@
-﻿namespace DataModels;
+﻿namespace DTOs;
 
-public class UserDetails
+public class UserDto
 {
-    public Guid Id { get; set; }
     public string AuthenticationUid { get; set; }
     public string? UserFirstName { get; set; }
     public string? UserLastName { get; set; }

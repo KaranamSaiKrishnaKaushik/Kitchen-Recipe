@@ -5,6 +5,7 @@ using Data;
 using Handlers;
 using Kitchen_Recipe;
 using Mappings;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Queries;
@@ -19,14 +20,17 @@ try
                            ?? throw new InvalidOperationException("Missing FirebaseAuth:Jwk");
 
     Console.WriteLine("Audience from config: " + firebaseAudience);
-
+    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
     builder.Services.AddAuthorization();
-
+    builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<AddUserCommand>());
+    builder.Services.AddMediatR(cfg =>
+        cfg.RegisterServicesFromAssembly(typeof(GetUserByAuthUidQueryHandler).Assembly));
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
     builder.Services.AddSingleton<PayPalService>();
     builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
+    builder.Services.AddAutoMapper(typeof(UserProfile).Assembly);
     builder.Services.AddScoped<GetRecipeQueryHandler>();
     builder.Services.AddScoped<AddRecipeCommandHandler>();
     builder.Services.AddScoped<GetIngredientQueryHandler>();
@@ -34,7 +38,9 @@ try
     builder.Services.AddScoped<UpdateRecipeCommandHandler>();
     builder.Services.AddScoped<AddProductsCommandHandler>();
     builder.Services.AddScoped<GetProductsQueryHandler>();
-
+    builder.Services.AddScoped<AddUserCommandHandler>();
+    builder.Services.AddScoped<UpdateUserCommandHandler>();
+    
     builder.Services.AddDbContext<DataContext>(options =>
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -93,6 +99,7 @@ try
      */
     
     // Manual JWT Middleware
+    app.UseAuthentication();
     app.Use(async (context, next) =>
     {
         var authHeader = context.Request.Headers["Authorization"].FirstOrDefault();
