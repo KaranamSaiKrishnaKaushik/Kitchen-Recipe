@@ -16,7 +16,20 @@ public static class MapEndpointsExtension
     public static void MapEndpoints(this WebApplication app)
     {
         app.MapGet("/",() => 
-            new { message = "This is protected data!" });
+            new { message = "You may reach the list of APIs by adding '/swagger' to the URL!" });
+        
+        app.MapGet("/get-user", async (
+            HttpContext httpContext,
+            IMediator mediator
+        ) => {
+            var firebaseUid = httpContext.User.FindFirst("user_id")?.Value;
+            if (string.IsNullOrWhiteSpace(firebaseUid))
+                return Results.Unauthorized();
+
+            var query = new GetUserByAuthUidQuery(firebaseUid);
+            var result = await mediator.Send(query);
+            return result == null ? Results.NotFound() : Results.Ok(result);
+        }).RequireAuthorization();
         
         app.MapPost("/add-user", async (
             HttpContext httpContext,
@@ -74,26 +87,52 @@ public static class MapEndpointsExtension
             return Results.Ok(updatedRecipe);
         }).RequireAuthorization();
         
-        app.MapGet("/get-user", async (
+        app.MapDelete("/delete-recipe/{id:guid}", async (
+            Guid id,
             HttpContext httpContext,
-            IMediator mediator
-        ) => {
-            var firebaseUid = httpContext.User.FindFirst("user_id")?.Value;
+            DataContext context
+        ) =>
+        {
+            var firebaseUid = httpContext.User.FindFirst(UserId)?.Value;
+
             if (string.IsNullOrWhiteSpace(firebaseUid))
                 return Results.Unauthorized();
 
-            var query = new GetUserByAuthUidQuery(firebaseUid);
-            var result = await mediator.Send(query);
-            return result == null ? Results.NotFound() : Results.Ok(result);
+            var recipe = await context.Recipe
+                .Include(r => r.Ingredients)
+                .FirstOrDefaultAsync(r => r.Id == id && r.AuthenticationUid == firebaseUid);
+
+            if (recipe == null)
+                return Results.NotFound("Recipe not found");
+
+            context.RecipeIngredients.RemoveRange(recipe.Ingredients);
+            context.Recipe.Remove(recipe);
+
+            await context.SaveChangesAsync();
+            return Results.Ok("Recipe deleted successfully.");
         }).RequireAuthorization();
+
+        
          
-        app.MapPost("/add-all-recipes",async (
+        app.MapPost("/add-all-recipes", async (
+            HttpContext httpContext,
             [FromBody] List<AddRecipeCommand> commands,
             [FromServices] AddRecipeCommandHandler handler) =>
         {
-            var recipes = await handler.HandleAddRecipes(commands);
+            var firebaseUid = httpContext.User.FindFirst(UserId)?.Value;
+
+            if (string.IsNullOrWhiteSpace(firebaseUid))
+                return Results.Unauthorized();
+
+            foreach (var cmd in commands)
+            {
+                cmd.AuthenticationUid = firebaseUid;
+            }
+
+            var recipes = await handler.HandleAddAllRecipes(commands);
             return Results.Created("/add-all-recipes", recipes.Select(r => r.Id));
-        });
+        }).RequireAuthorization();
+
 
         app.MapGet("/fetch-all-recipes", async (HttpContext httpContext,
             [FromServices] DataContext context) =>
