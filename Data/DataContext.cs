@@ -24,7 +24,7 @@ public class DataContext : DbContext
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<Recipe>()
-            .HasIndex(r => r.Name)
+            .HasIndex(r => new { r.Name, r.AuthenticationUid })
             .IsUnique();
 
         modelBuilder.Entity<Recipe>()
