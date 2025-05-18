@@ -25,6 +25,7 @@ try
     builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<AddUserCommand>());
     builder.Services.AddMediatR(cfg =>
         cfg.RegisterServicesFromAssembly(typeof(GetUserByAuthUidQueryHandler).Assembly));
+    builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(UpdateUserCommandHandler).Assembly));
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
@@ -34,12 +35,16 @@ try
     builder.Services.AddScoped<GetRecipeQueryHandler>();
     builder.Services.AddScoped<AddRecipeCommandHandler>();
     builder.Services.AddScoped<GetIngredientQueryHandler>();
+    builder.Services.AddScoped<GetShoppingCartQueryHandler>();
     builder.Services.AddScoped<AddIngredientCommandHandler>();
     builder.Services.AddScoped<UpdateRecipeCommandHandler>();
     builder.Services.AddScoped<AddProductsCommandHandler>();
     builder.Services.AddScoped<GetProductsQueryHandler>();
     builder.Services.AddScoped<AddUserCommandHandler>();
     builder.Services.AddScoped<UpdateUserCommandHandler>();
+    builder.Services.AddScoped<AddToShoppingCartCommandHandler>();
+    builder.Services.AddScoped<AddCartBulkHandler>();
+    builder.Services.AddScoped<PlaceOrderCommandHandler>();
     
     builder.Services.AddDbContext<DataContext>(options =>
     {

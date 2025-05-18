@@ -3,6 +3,7 @@
 public class UserDto
 {
     public string AuthenticationUid { get; set; }
+    public string? Salutation { get; set; }
     public string? UserFirstName { get; set; }
     public string? UserLastName { get; set; }
     public string? Headline { get; set; }

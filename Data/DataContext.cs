@@ -13,8 +13,10 @@ public class DataContext : DbContext
     
     public DbSet<AmazonProduct> AmazonProducts { get; set; }
     public DbSet<WalmartProduct> WalmartProducts { get; set; }
-    public DbSet<ReweProduct> ReweProducts { get; set; }
-    
+    public DbSet<AllStoresProducts> AllStoresProducts { get; set; }
+    public DbSet<ShoppingCart> ShoppingCart => Set<ShoppingCart>();
+    public DbSet<OrderedItem> OrderedItems { get; set; }
+    public DbSet<OrderHistory> OrderHistories { get; set; }
     public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
     public DataContext() { }
@@ -47,12 +49,19 @@ public class DataContext : DbContext
         
         modelBuilder.Entity<WalmartProduct>().ToTable("WalmartProducts");
         
-        modelBuilder.Entity<ReweProduct>().ToTable("ReweProducts");
+        modelBuilder.Entity<AllStoresProducts>().ToTable("AllStoresProducts");
+        
+        modelBuilder.Entity<ShoppingCart>()
+            .HasIndex(r => new { r.ProductId, r.AuthenticationUid })
+            .IsUnique();
     }
     
     public override int SaveChanges()
     {
         UpdateAuditFields();
+        UpdateCartAuditFields();
+        UpdateOrderedItemsFields();
+        UpdateOrderHistoryFields();
         return base.SaveChanges();
     }
 
@@ -74,6 +83,54 @@ public class DataContext : DbContext
             if (entry.State == EntityState.Added)
             {
                 entry.Entity.CreatedDate = DateTime.UtcNow;
+            }
+        }
+    }
+    
+    private void UpdateCartAuditFields()
+    {
+        var entries = ChangeTracker.Entries<ShoppingCart>()
+            .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
+
+        foreach (var entry in entries)
+        {
+            entry.Entity.UpdatedDate = DateTime.UtcNow;
+
+            if (entry.State == EntityState.Added)
+            {
+                entry.Entity.CreatedDate = DateTime.UtcNow;
+            }
+        }
+    }
+    
+    private void UpdateOrderHistoryFields()
+    {
+        var entries = ChangeTracker.Entries<OrderHistory>()
+            .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
+
+        foreach (var entry in entries)
+        {
+            entry.Entity.UpdatedDateTime = DateTime.UtcNow;
+
+            if (entry.State == EntityState.Added)
+            {
+                entry.Entity.CreatedDateTime = DateTime.UtcNow;
+            }
+        }
+    }
+    
+    private void UpdateOrderedItemsFields()
+    {
+        var entries = ChangeTracker.Entries<OrderedItem>()
+            .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
+
+        foreach (var entry in entries)
+        {
+            entry.Entity.UpdatedDateTime = DateTime.UtcNow;
+
+            if (entry.State == EntityState.Added)
+            {
+                entry.Entity.CreatedDateTime = DateTime.UtcNow;
             }
         }
     }

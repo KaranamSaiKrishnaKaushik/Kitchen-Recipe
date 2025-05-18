@@ -15,7 +15,12 @@ public class ProductMapper
         CustomerReview = p.CustomerReview,
         ReviewCount = p.CustomerReviewCount,
         ImageLink = p.Image,
-        ProductLink = p.AmazonLink
+        ProductLink = p.AmazonLink,
+        IsOnSale = p.IsOnSale,
+        Category = p.Category,
+        Grammage = p.Grammage,
+        ProductId = p.ProductId,
+        sourceName = p.sourceName
     };
 
     public static WalmartProduct FromWalmart(WalmartProductDto p) => new WalmartProduct
@@ -30,15 +35,20 @@ public class ProductMapper
         ProductLink = p.Link
     };
 
-    public static ReweProduct FromRewe(ReweProductDto p) => new ReweProduct
+    public static AllStoresProducts FromAllStoresProducts(AllStoresProductsDto p) => new AllStoresProducts
     {
         Id = Guid.NewGuid(),
-        Name = p.ProductName,
-        Price = p.Cost,
+        Name = p.Name,
+        Price = p.Price,
         Currency = p.Currency,
         CustomerReview = p.Review,
         ReviewCount = p.ReviewCount,
-        ImageLink = p.ImageUrl,
-        ProductLink = p.ProductUrl
+        ImageLink = p.ImageLink,
+        ProductLink = p.ProductUrl,
+        ProductId = p.ProductId,
+        Grammage = p.Grammage,
+        Category = p.Category,
+        IsOnSale = p.IsOnSale,
+        sourceName = p.sourceName
     };
 }
