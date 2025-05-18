@@ -304,24 +304,126 @@ public static class MapEndpointsExtension
             return Results.Ok(products);
         });
 
-        app.MapPost("/api/products/rewe", async (List<ReweProductDto> input, AddProductsCommandHandler handler) =>
+        app.MapPost("/api/products/all-stores", async (List<AllStoresProductsDto> input, AddProductsCommandHandler handler) =>
         {
-            var products = input.Select(ProductMapper.FromRewe).ToList();
+            var products = input.Select(ProductMapper.FromAllStoresProducts).ToList();
             await handler.Handle(products);
             return Results.Ok(products);
         });
 
-        // GET by source
-        app.MapGet("/api/products/{source}", async (string source, GetProductsQueryHandler handler) =>
+        app.MapGet("/api/products/{source}", async (
+            string source,
+            HttpRequest request,
+            GetProductsQueryHandler handler) =>
         {
-            var products = await handler.Handle(source);
-            return Results.Ok(products);
-        }); 
+            if (!int.TryParse(request.Query["page"], out var page))
+                return Results.BadRequest("Missing 'page'");
+
+            if (!int.TryParse(request.Query["pageSize"], out var pageSize))
+                return Results.BadRequest("Missing 'pageSize'");
+
+            var result = await handler.GetPagedProducts(source, page, pageSize);
+            return Results.Ok(result);
+        });
         
         app.MapPost("/api/products/searchByNames", async (ProductSearchRequest request, GetProductsQueryHandler handler) =>
         {
             var result = await handler.SearchByNames(request.Source, request.Names);
             return Results.Ok(result);
         });
+        
+        app.MapGet("/api/products/all-store-products/by-store/{name}", async (string name, GetProductsQueryHandler handler) =>
+        {
+            var products = await handler.GetProductsFromOneStore(name);
+            return Results.Ok(products);
+        });
+
+        app.MapPost("/api/products/add-to-shopping-cart", async (
+            HttpContext httpContext,   
+            [FromBody] AddShoppingCartCommand command,
+            [FromServices] AddToShoppingCartCommandHandler handler) =>
+        {
+            var firebaseUid = httpContext.User.FindFirst(UserId)?.Value;
+            command.AuthenticationUid = firebaseUid;
+            var product = await handler.AddToShoppingCart(command);
+            return Results.Created($"/add-to-shopping-cart/{product.Id}", product.Id);
+        }).RequireAuthorization();
+        
+        app.MapPost("/api/products/add-cart-bulk", async (
+            HttpContext httpContext,
+            [FromBody] List<AddShoppingCartCommand> items,
+            [FromServices] AddCartBulkHandler handler) =>
+        {
+            var firebaseUid = httpContext.User.FindFirst(UserId)?.Value;
+            await handler.HandleAsync(items, firebaseUid);
+            return Results.Ok();
+        }).RequireAuthorization();
+        
+        app.MapGet("/api/products/shopping-cart-list", async (
+            HttpContext httpContext,
+            [FromServices] GetShoppingCartQueryHandler handler) =>
+        {
+            var firebaseUid = httpContext.User.FindFirst(UserId)?.Value;
+            if (string.IsNullOrWhiteSpace(firebaseUid))
+            {
+                return Results.Unauthorized();
+            }
+
+            var products = await handler.GetUserCartAsync(firebaseUid);
+            return Results.Ok(products);
+        }).RequireAuthorization();
+        
+        app.MapPost("/api/orders/place-order", async (
+            HttpContext httpContext,
+            [FromBody] List<AllStoresProductsWithQuantityDto> items,
+            [FromServices] IMediator mediator) =>
+        {
+            var firebaseUid = httpContext.User.FindFirst("user_id")?.Value;
+            if (string.IsNullOrWhiteSpace(firebaseUid))
+                return Results.Unauthorized();
+
+            var command = new PlaceOrderCommand
+            {
+                AuthenticationUid = firebaseUid,
+                Items = items
+            };
+
+            var orderHistory = await mediator.Send(command);
+
+            return orderHistory != null
+                ? Results.Ok(orderHistory)
+                : Results.BadRequest("Failed to place order");
+        }).RequireAuthorization();
+
+        app.MapGet("/api/orders/history", async (
+            HttpContext httpContext,
+            [FromServices] DataContext db) =>
+        {
+            var firebaseUid = httpContext.User.FindFirst("user_id")?.Value;
+            if (string.IsNullOrWhiteSpace(firebaseUid))
+                return Results.Unauthorized();
+
+            var history = await db.OrderHistories
+                .Where(o => o.AuthenticationUid == firebaseUid)
+                .OrderByDescending(o => o.CreatedDateTime)
+                .ToListAsync();
+            return Results.Ok(history);
+        }).RequireAuthorization();
+        
+        app.MapGet("/api/orders/items", async (
+            HttpContext httpContext,
+            [FromServices] DataContext db) =>
+        {
+            var firebaseUid = httpContext.User.FindFirst("user_id")?.Value;
+            if (string.IsNullOrWhiteSpace(firebaseUid))
+                return Results.Unauthorized();
+
+            var orderedItems = await db.OrderedItems
+                .Where(o => o.AuthenticationUid == firebaseUid)
+                .OrderByDescending(o => o.OrderId)
+                .ToListAsync();
+
+            return Results.Ok(orderedItems);
+        }).RequireAuthorization();
     }
 }
