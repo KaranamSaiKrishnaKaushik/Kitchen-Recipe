@@ -40,6 +40,10 @@ public class AddIngredientCommandHandler
         if (existing != null)
         {
             existing.Amount += command.Amount;
+            if (string.IsNullOrEmpty(existing.AuthenticationUid) && !string.IsNullOrEmpty(command.AuthenticationUid))
+            {
+                existing.AuthenticationUid = command.AuthenticationUid;
+            }
         }
         else
         {
