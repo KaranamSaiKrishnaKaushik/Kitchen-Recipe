@@ -349,6 +349,27 @@ public static class MapEndpointsExtension
             return Results.Created($"/add-to-shopping-cart/{product.Id}", product.Id);
         }).RequireAuthorization();
         
+        app.MapDelete("/api/products/remove-from-cart/{productId}", async (
+            HttpContext httpContext,
+            string productId,
+            DataContext context) =>
+        {
+            var firebaseUid = httpContext.User.FindFirst(UserId)?.Value;
+
+            var cartItem = await context.ShoppingCart
+                .FirstOrDefaultAsync(x => x.ProductId == productId && x.AuthenticationUid == firebaseUid);
+
+            if (cartItem == null)
+            {
+                return Results.NotFound();
+            }
+
+            context.ShoppingCart.Remove(cartItem);
+            await context.SaveChangesAsync();
+
+            return Results.Ok("Item removed from cart.");
+        }).RequireAuthorization();
+        
         app.MapPost("/api/products/add-cart-bulk", async (
             HttpContext httpContext,
             [FromBody] List<AddShoppingCartCommand> items,
