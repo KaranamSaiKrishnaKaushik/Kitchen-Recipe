@@ -18,8 +18,9 @@ try
         ?? throw new InvalidOperationException("Missing FirebaseAuth:Audience");
     var firebaseJwk = builder.Configuration["FirebaseAuth:Jwk"]
                            ?? throw new InvalidOperationException("Missing FirebaseAuth:Jwk");
+    builder.Services.Configure<AzureTranslatorOptions>(
+        builder.Configuration.GetSection("AzureTranslator"));
 
-    Console.WriteLine("Audience from config: " + firebaseAudience);
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
     builder.Services.AddAuthorization();
     builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<AddUserCommand>());
@@ -46,6 +47,7 @@ try
     builder.Services.AddScoped<AddCartBulkHandler>();
     builder.Services.AddScoped<PlaceOrderCommandHandler>();
     
+    builder.Services.AddHttpClient();
     builder.Services.AddDbContext<DataContext>(options =>
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));

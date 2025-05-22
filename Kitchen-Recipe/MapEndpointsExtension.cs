@@ -1,4 +1,6 @@
-﻿using Commands;
+﻿using System.Text;
+using System.Text.Json;
+using Commands;
 using Data;
 using DTOs;
 using Handlers;
@@ -6,6 +8,7 @@ using Mappings;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Queries;
 
 namespace Kitchen_Recipe;
@@ -324,6 +327,33 @@ public static class MapEndpointsExtension
 
             var result = await handler.GetPagedProducts(source, page, pageSize);
             return Results.Ok(result);
+        });
+        
+        app.MapPost("/api/translate", async (
+            TranslateRequest request,
+            HttpClient http,
+            IOptions<AzureTranslatorOptions> options) =>
+        {
+            var key = options.Value.TranslatorApiKey;
+            var region = options.Value.TranslatorRegion;
+            var endpoint = options.Value.TranslatorEndpoint;
+            
+            var body = new[] { new { Text = request.Text } };
+            var content = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
+
+            http.DefaultRequestHeaders.Clear();
+            http.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", key);
+            http.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Region", region);
+
+            var res = await http.PostAsync(endpoint, content);
+            var json = await res.Content.ReadAsStringAsync();
+
+            if (!res.IsSuccessStatusCode)
+                return Results.Problem($"Translation failed: {res.StatusCode} - {json}");
+
+            var translations = JsonDocument.Parse(json).RootElement[0].GetProperty("translations");
+            var translatedText = translations[0].GetProperty("text").GetString();
+            return Results.Ok(new { translatedText });
         });
         
         app.MapPost("/api/products/searchByNames", async (ProductSearchRequest request, GetProductsQueryHandler handler) =>
