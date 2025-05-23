@@ -6,6 +6,7 @@ using DTOs;
 using Handlers;
 using Mappings;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -18,6 +19,12 @@ public static class MapEndpointsExtension
     private  const string UserId = "user_id";
     public static void MapEndpoints(this WebApplication app)
     {
+        /*app.MapGet("/secure", [Authorize] (HttpContext context) =>
+        {
+            var userId = context.User.Identity?.Name ?? "Unknown";
+            return Results.Ok($"Secure data for: {userId}");
+        });*/
+        
         app.MapGet("/",() => 
             new { message = "You may reach the list of APIs by adding '/swagger' to the URL!" });
         
