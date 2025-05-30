@@ -14,14 +14,26 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
 
-    var firebaseAudience = builder.Configuration["FirebaseAuth:Audience"]
-        ?? throw new InvalidOperationException("Missing FirebaseAuth:Audience");
-    var firebaseJwk = builder.Configuration["FirebaseAuth:Jwk"]
-                           ?? throw new InvalidOperationException("Missing FirebaseAuth:Jwk");
     builder.Services.Configure<AzureTranslatorOptions>(
         builder.Configuration.GetSection("AzureTranslator"));
 
-    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
+    JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+    builder.Services.AddAuthentication("Bearer")
+        .AddJwtBearer("Bearer", options =>
+        {
+            options.Authority = $"https://{builder.Configuration["Auth0:Domain"]}/";
+            options.Audience = builder.Configuration["Auth0:Audience"];
+
+            // Validate token issuer
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidIssuer = $"https://{builder.Configuration["Auth0:Domain"]}/",
+                ValidateAudience = true,
+                ValidAudience = builder.Configuration["Auth0:Audience"],
+                ValidateLifetime = true
+            };
+        });
     builder.Services.AddAuthorization();
     builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<AddUserCommand>());
     builder.Services.AddMediatR(cfg =>
@@ -29,7 +41,6 @@ try
     builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(UpdateUserCommandHandler).Assembly));
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
-
     builder.Services.AddSingleton<PayPalService>();
     builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
     builder.Services.AddAutoMapper(typeof(UserProfile).Assembly);
@@ -80,82 +91,9 @@ try
     app.UseSwaggerUI();
     app.UseHttpsRedirection();
     app.UseCors();
-
-    /*
-         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddJwtBearer(options =>
-        {
-            options.Authority = firebaseAuthority;
-            options.Audience = firebaseAudience;
-            options.RequireHttpsMetadata = true;
-            
-            options.Events = new JwtBearerEvents
-            {
-                OnAuthenticationFailed = context =>
-                {
-                    Console.WriteLine("JWT AUTH FAIL: " + context.Exception.Message);
-                    return Task.CompletedTask;
-                },
-                OnTokenValidated = context =>
-                {
-                    Console.WriteLine("JWT AUTH SUCCESS");
-                    return Task.CompletedTask;
-                }
-            };
-        });
-     */
-    
-    // Manual JWT Middleware
     app.UseAuthentication();
-    app.Use(async (context, next) =>
-    {
-        var authHeader = context.Request.Headers["Authorization"].FirstOrDefault();
-
-        if (!string.IsNullOrWhiteSpace(authHeader) && authHeader.StartsWith("Bearer "))
-        {
-            var token = authHeader.Substring("Bearer ".Length);
-
-            try
-            {
-                var validProjectId = firebaseAudience;
-                var http = new HttpClient();
-                var jwksJson = await http.GetStringAsync(firebaseJwk);
-                Console.WriteLine("JWKS JSON: " + jwksJson);
-
-                var keysResponse = new JsonWebKeySet(jwksJson);
-
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var validationParameters = new TokenValidationParameters
-                {
-                    ValidIssuer = $"https://securetoken.google.com/{validProjectId}",
-                    ValidAudience = validProjectId,
-                    IssuerSigningKeys = keysResponse.Keys,
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true
-                };
-
-                var principal = tokenHandler.ValidateToken(token, validationParameters, out _);
-                context.User = principal;
-
-                Console.WriteLine("JWT AUTH SUCCESS for: " + context.User.Identity?.Name);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("JWT AUTH FAILED: " + ex.Message);
-                context.Response.StatusCode = 401;
-                await context.Response.WriteAsync("Unauthorized");
-                return;
-            }
-        }
-
-        await next();
-    });
-
     app.UseAuthorization();
     app.MapEndpoints();
-
     app.Run();
 }
 catch (Exception ex)
