@@ -1,3 +1,4 @@
+/*
 using System.IdentityModel.Tokens.Jwt;
 using System.Text.Json.Serialization;
 using Commands;
@@ -44,6 +45,14 @@ try
     builder.Services.AddSingleton<PayPalService>();
     builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
     builder.Services.AddAutoMapper(typeof(UserProfile).Assembly);
+    builder.Services.AddScoped<IEndpointMapper, RecipeEndpointMapper>();
+    builder.Services.AddScoped<IEndpointMapper, IngredientEndpointMapper>();
+    builder.Services.AddScoped<IEndpointMapper, AuthEndpointMapper>();
+    builder.Services.AddScoped<IEndpointMapper, OrdersEndpointMapper>();
+    builder.Services.AddScoped<IEndpointMapper, PaymentEndpointMapper>();
+    builder.Services.AddScoped<IEndpointMapper, ProductsEndpointMapper>();
+    builder.Services.AddScoped<IEndpointMapper, UserEndpointMapper>();
+    builder.Services.AddScoped<IEndpointMapperFactory, EndpointMapperFactory>();
     builder.Services.AddScoped<GetRecipeQueryHandler>();
     builder.Services.AddScoped<AddRecipeCommandHandler>();
     builder.Services.AddScoped<GetIngredientQueryHandler>();
@@ -57,7 +66,7 @@ try
     builder.Services.AddScoped<AddToShoppingCartCommandHandler>();
     builder.Services.AddScoped<AddCartBulkHandler>();
     builder.Services.AddScoped<PlaceOrderCommandHandler>();
-    
+
     builder.Services.AddHttpClient();
     builder.Services.AddDbContext<DataContext>(options =>
     {
@@ -93,7 +102,13 @@ try
     app.UseCors();
     app.UseAuthentication();
     app.UseAuthorization();
-    app.MapEndpoints();
+    //app.MapAllEndpoints();
+    using var scope = app.Services.CreateScope();
+    var mapperFactory = scope.ServiceProvider.GetRequiredService<IEndpointMapperFactory>();
+    foreach (var mapper in mapperFactory.GetEndpointMappers())
+    {
+        mapper.MapEndpoints(app);
+    }
     app.Run();
 }
 catch (Exception ex)
@@ -101,3 +116,18 @@ catch (Exception ex)
     File.WriteAllText("/home/Log.txt", ex.ToString());
     throw;
 }
+*/
+
+using Kitchen_Recipe;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.RegisterAppConfiguration(builder.Configuration);
+builder.Services.RegisterDependencies(builder.Configuration);
+
+var app = builder.Build();
+
+app.ConfigureMiddlewares();
+app.RegisterEndpoints();
+
+app.Run();
