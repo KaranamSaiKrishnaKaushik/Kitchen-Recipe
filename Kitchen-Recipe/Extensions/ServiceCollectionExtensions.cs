@@ -46,6 +46,8 @@ public static class ServiceCollectionExtensions
             cfg.RegisterServicesFromAssembly(typeof(GetUserByAuthUidQueryHandler).Assembly));
         services.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssembly(typeof(UpdateUserCommandHandler).Assembly));
+        services.AddMediatR(cfg=>
+            cfg.RegisterServicesFromAssembly(typeof(UpdateSocialUserEmailIdCommandHandler).Assembly));
 
         // Automapper
         services.AddAutoMapper(
