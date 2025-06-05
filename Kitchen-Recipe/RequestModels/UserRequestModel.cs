@@ -1,4 +1,5 @@
-﻿using DTOs;
+﻿using Data;
+using DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,4 +24,19 @@ public class AddUserRequest
     
     [FromServices] 
     public IMediator Mediator { get; set; }
+}
+
+public class AddSocialIdUserRequest
+{
+    [FromBody]
+    public UserEmailDto UserEmailDto  { get; set; }
+    
+    [FromServices]
+    public IHttpContextAccessor HttpContextAccessor { get; set; }
+    
+    [FromServices] 
+    public IMediator Mediator { get; set; }
+    
+    [FromServices]
+    public DataContext Context { get; set; }
 }
