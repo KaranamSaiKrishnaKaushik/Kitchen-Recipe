@@ -1,6 +1,6 @@
 # Default ignored files
 /shelf/
-/workspace.xml
+# workspace.xml - kept for GitHub Copilot configuration
 # Rider ignored files
 /.idea.Kitchen-Recipe.iml
 /projectSettingsUpdater.xml
