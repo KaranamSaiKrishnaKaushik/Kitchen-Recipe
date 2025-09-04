@@ -1,5 +1,6 @@
-﻿@"
+# Kitchen Recipe specific
 /Kitchen-Recipe/appsettings.json
+
 # Build results
 bin/
 obj/
@@ -23,4 +24,3 @@ obj/
 
 # Others
 *.log
-"@ | Out-File -Encoding utf8 -NoByteOrderMark .gitignore
